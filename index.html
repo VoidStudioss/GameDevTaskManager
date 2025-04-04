@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Dev Task Board</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 2rem;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+      font-size: 2.5rem;
+      animation: popUp 0.8s ease;
+    }
+
+    form {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      backdrop-filter: blur(8px);
+    }
+
+    input, button {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    input {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    button {
+      background: #00c9a7;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #00b396;
+    }
+
+    .task-board {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .task-card {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 1rem;
+      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.25);
+      animation: fadeInUp 0.6s ease both;
+      border-left: 5px solid #00c9a7;
+      transition: transform 0.3s;
+    }
+
+    .task-card:hover {
+      transform: scale(1.03);
+    }
+
+    .task-card h3 {
+      margin: 0 0 0.5rem 0;
+    }
+
+    .task-card p {
+      margin: 0.2rem 0;
+      font-size: 0.95rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎮 Game Dev Task Board</h1>
+
+  <form id="taskForm">
+    <input type="text" id="name" placeholder="Your Name" required />
+    <input type="text" id="task" placeholder="What are you working on?" required />
+    <input type="text" id="scene" placeholder="Scene / Level" required />
+    <button type="submit">Add Task</button>
+  </form>
+
+  <div class="task-board" id="taskBoard"></div>
+
+  <script>
+    const taskForm = document.getElementById('taskForm');
+    const taskBoard = document.getElementById('taskBoard');
+
+    taskForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const task = document.getElementById('task').value.trim();
+      const scene = document.getElementById('scene').value.trim();
+
+      if (!name || !task || !scene) return;
+
+      const card = document.createElement('div');
+      card.className = 'task-card';
+      card.innerHTML = `
+        <h3>${name}</h3>
+        <p><strong>Task:</strong> ${task}</p>
+        <p><strong>Scene:</strong> ${scene}</p>
+      `;
+
+      taskBoard.appendChild(card);
+
+      taskForm.reset();
+    });
+  </script>
+
+</body>
+</html>
